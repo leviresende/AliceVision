@@ -19,8 +19,11 @@
 #if ALICEVISION_IS_DEFINED(ALICEVISION_HAVE_OPENCV)
 #if ALICEVISION_IS_DEFINED(ALICEVISION_HAVE_OCVSIFT)
 #include <aliceVision/feature/openCV/ImageDescriber_SIFT_OCV.hpp>
+#include <aliceVision/feature/openCV/ImageDescriber_SURF_OCV.hpp>
 #endif //ALICEVISION_HAVE_OCVSIFT
 #include <aliceVision/feature/openCV/ImageDescriber_AKAZE_OCV.hpp>
+#include <aliceVision/feature/openCV/ImageDescriber_SURF_OCV.hpp>
+
 #endif //ALICEVISION_HAVE_OPENCV
 
 #include <boost/filesystem.hpp>
@@ -94,9 +97,11 @@ std::unique_ptr<ImageDescriber> createImageDescriber(EImageDescriberType imageDe
     case EImageDescriberType::SIFT:           describerPtr.reset(new ImageDescriber_SIFT(SiftParams(), true)); break;
     case EImageDescriberType::SIFT_FLOAT:     describerPtr.reset(new ImageDescriber_SIFT_vlfeatFloat(SiftParams())); break;
     case EImageDescriberType::SIFT_UPRIGHT:   describerPtr.reset(new ImageDescriber_SIFT(SiftParams(), false)); break;
+    //case EImageDescriberType::SURF_OCV:      describerPtr.reset(new ImageDescriber_SURF_openCV()); break;
     case EImageDescriberType::AKAZE:          describerPtr.reset(new ImageDescriber_AKAZE(AKAZEParams(AKAZEOptions(), feature::AKAZE_MSURF))); break;
     case EImageDescriberType::AKAZE_MLDB:     describerPtr.reset(new ImageDescriber_AKAZE(AKAZEParams(AKAZEOptions(), feature::AKAZE_MLDB))); break;
     case EImageDescriberType::AKAZE_LIOP:     describerPtr.reset(new ImageDescriber_AKAZE(AKAZEParams(AKAZEOptions(), feature::AKAZE_LIOP))); break;
+    //case EImageDescriberType::BRISK_OCV:     describerPtr.reset(new ImageDescriber_BRISK_OCV()); break;
 
 #if ALICEVISION_IS_DEFINED(ALICEVISION_HAVE_CCTAG)
     case EImageDescriberType::CCTAG3:      describerPtr.reset(new ImageDescriber_CCTAG(3)); break;
@@ -106,8 +111,10 @@ std::unique_ptr<ImageDescriber> createImageDescriber(EImageDescriberType imageDe
 #if ALICEVISION_IS_DEFINED(ALICEVISION_HAVE_OPENCV)
 #if ALICEVISION_IS_DEFINED(ALICEVISION_HAVE_OCVSIFT)
   case EImageDescriberType::SIFT_OCV:      describerPtr.reset(new ImageDescriber_SIFT_openCV()); break;
+  case EImageDescriberType::SURF_OCV:      describerPtr.reset(new ImageDescriber_SURF_openCV()); break;
 #endif //ALICEVISION_HAVE_OCVSIFT
   case EImageDescriberType::AKAZE_OCV:     describerPtr.reset(new ImageDescriber_AKAZE_OCV()); break;
+  case EImageDescriberType::BRISK_OCV:     describerPtr.reset(new ImageDescriber_BRISK_OCV()); break;
 #endif //ALICEVISION_HAVE_OPENCV
     
     default: throw std::out_of_range("Invalid imageDescriber enum");
